@@ -211,7 +211,6 @@ def validate_entry_wtc(params):
 
      # 检查factom是否anchor到btc上了
     bitcointransactionhash, bitcoinblockhash = receipt_res.get("bitcointransactionhash"), receipt_res.get("bitcoinblockhash")
-    print(bitcointransactionhash, bitcoinblockhash, 555)
     if not (bitcoinblockhash and bitcointransactionhash):
         return receipt_error("missing blockhash/transactionhash!")
 
@@ -233,7 +232,7 @@ def validate_entry_wtc(params):
     datahex = datahex
     entryblockkeymr = receipt_res["entryblockkeymr"]
     directoryblockkeymr = receipt_res["directoryblockkeymr"]
-    print("datahex:{} directoryblockkeymr:{}".format(datahex, directoryblockkeymr))
+    #print("datahex:{} directoryblockkeymr:{}".format(datahex, directoryblockkeymr))
 
     # 获取dbheight
     entryblock, error = get_entry_block(entryblockkeymr)
@@ -242,9 +241,9 @@ def validate_entry_wtc(params):
 
     # 校验data_hex
     dbheight = entryblock["header"]["dbheight"]
-    print("dbheight:{}".format(dbheight))
+    #print("dbheight:{}".format(dbheight))
     op_return = make_eth_input(dbheight, directoryblockkeymr)
-    print("datahex:{} op_return:{}".format(datahex, op_return))
+    #print("datahex:{} op_return:{}".format(datahex, op_return))
     if datahex != op_return:
         return blockchain_error("missmatch data_hex in btc")
 

@@ -5,7 +5,6 @@ import struct
 from config import Config
 
 def get_eth_transaction(bitcointransactionhash):
-    print("bitcointransactionhash:{}".format(bitcointransactionhash))
     headers = {"Content-type": "application/json"}
 
     # bitcointransactionhash = "0x" + "db70bdc1ad47843e3948bfc5263e6a2e3a5990c78e99bdfea50111e071391d61"
@@ -13,7 +12,6 @@ def get_eth_transaction(bitcointransactionhash):
     data = {"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":[bitcointransactionhash],"id":1}
     resp = requests.post(Config.ETH_HOST, data=json.dumps(data), headers=headers, timeout=30)
     s = resp.content.decode()
-    print("result:{}".format(s))
     res = json.loads(s)
     error = res.get("error")
     if error:
