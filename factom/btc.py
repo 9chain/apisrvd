@@ -2,18 +2,16 @@ import requests
 import json
 from .common import CustomError, make_data
 import struct
+from config import Config
 
 def get_eth_transaction(bitcointransactionhash):
-    #btc_host = "https://api.blockcypher.com"
-    # bitcointransactionhash = "469a96c847cf8bf1f325b6eec850f46488ed671930d62b54ed186a8031477a7d"
-    # bitcointransactionhash = "469a96c847cf8bf1f325b6eec850f46488ed671930d62b54ed186a8031477a70"
-    #url = "{}/v1/btc/main/txs/{}".format(btc_host, bitcointransactionhash)
-
     print("bitcointransactionhash:{}".format(bitcointransactionhash))
-    url = "http://localhost:8545"
     headers = {"Content-type": "application/json"}
-    data = {"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0x" + bitcointransactionhash],"id":1}
-    resp = requests.post(url, data=json.dumps(data), headers=headers, timeout=30)
+
+    # bitcointransactionhash = "0x" + "db70bdc1ad47843e3948bfc5263e6a2e3a5990c78e99bdfea50111e071391d61"
+    bitcointransactionhash = "0x" + bitcointransactionhash
+    data = {"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":[bitcointransactionhash],"id":1}
+    resp = requests.post(Config.ETH_HOST, data=json.dumps(data), headers=headers, timeout=30)
     s = resp.content.decode()
     print("result:{}".format(s))
     res = json.loads(s)
